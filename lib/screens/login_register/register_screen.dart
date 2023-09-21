@@ -306,7 +306,7 @@ class _StepSendCodeState extends State<_StepSendCode>
                             'It is not possible to verify your account at this time, please try again later.',
                         succes: false,
                         context: context);
-                  } else if (value['kind'] != "" && value['kind'] != null) {
+                  } else if (value['email'] != "" && value['email'] != null) {
                     navigationStepsProvider.actualPage = 4;
                   } else {
                     Toast.show(
