@@ -21,95 +21,97 @@ class WelcomeScreen extends StatelessWidget {
             height: Adaptive.h(100),
           ),
           SafeArea(
-            child: Container(
-              height: Adaptive.h(100),
-              padding: const EdgeInsets.only(left: 16, right: 16),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Container(
-                    margin: EdgeInsets.only(top: 32.sp),
-                    child: Column(
-                      children: [
-                        Text('Welcome to',
-                            textAlign: TextAlign.center,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: GoogleFonts.poppins(
-                              fontWeight: AppTheme.fontRegular,
-                              color: AppTheme.white,
-                              fontSize: 24.sp,
-                            )),
-                          FittedBox(
-                            fit: BoxFit.fitWidth,
-                            child: Text('your Pokédex',
+            child: SingleChildScrollView(
+              child: Container(
+                height: Adaptive.h(100),
+                padding: const EdgeInsets.only(left: 16, right: 16),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Container(
+                      margin: EdgeInsets.only(top: 32.sp),
+                      child: Column(
+                        children: [
+                          Text('Welcome to',
                               textAlign: TextAlign.center,
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                               style: GoogleFonts.poppins(
-                                fontWeight: AppTheme.fontBold,
+                                fontWeight: AppTheme.fontRegular,
                                 color: AppTheme.white,
-                                fontSize: 28.sp,
+                                fontSize: 24.sp,
                               )),
+                            FittedBox(
+                              fit: BoxFit.fitWidth,
+                              child: Text('your Pokédex',
+                                textAlign: TextAlign.center,
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: GoogleFonts.poppins(
+                                  fontWeight: AppTheme.fontBold,
+                                  color: AppTheme.white,
+                                  fontSize: 28.sp,
+                                )),
+                            ),
+                          Container(
+                            constraints: BoxConstraints(
+                              minHeight: Adaptive.h(42),
+                              maxHeight: Adaptive.h(65)
+                            ),
+                            child: Image.asset(
+                              'assets/images/pikachu.png',
+                              width: Adaptive.w(90),
+                            ),
                           ),
-                        Container(
-                          constraints: BoxConstraints(
-                            minHeight: Adaptive.h(42),
-                            maxHeight: Adaptive.h(65)
-                          ),
-                          child: Image.asset(
-                            'assets/images/pikachu.png',
-                            width: Adaptive.w(90),
-                          ),
+                        ],
+                      ),
+                    ),
+                    Column(
+                      children: [
+                        MainBtn(
+                          isLoading: false,
+                          textBtn: "CREATE NEW ACCOUNT",
+                          onPress: () {
+                            Navigator.push(
+                                context,
+                                createRoute(page: const RegisterScreen()),
+                              );
+                          },
+                          width: double.infinity,
+                          height: 28.sp,
+                          enable: true,
+                          fontSize: 16.sp,
+                          //color: AppTheme.primaryPrurple,
+                          textColor: AppTheme.white,
+                          color: AppTheme.red,
+                          border: false,
+                          fontWeight: AppTheme.fontSemiBold,
+                        ),
+                        const SizedBox(
+                          height: 16,
+                        ),
+                        MainBtn(
+                          isLoading: false,
+                          textBtn: "LOG IN",
+                          onPress: () {
+                            Navigator.push(
+                                context,
+                                createRoute(page: const LoginScreen()),
+                              );
+                          },
+                          width: double.infinity,
+                          height: 28.sp,
+                          enable: true,
+                          fontSize: 16.sp,
+                          textColor: AppTheme.red,
+                          color: Colors.transparent,
+                          border: true,
+                          fontWeight: AppTheme.fontSemiBold,
                         ),
                       ],
-                    ),
-                  ),
-                  Column(
-                    children: [
-                      MainBtn(
-                        isLoading: false,
-                        textBtn: "CREATE NEW ACCOUNT",
-                        onPress: () {
-                          Navigator.push(
-                              context,
-                              createRoute(page: const RegisterScreen()),
-                            );
-                        },
-                        width: double.infinity,
-                        height: 28.sp,
-                        enable: true,
-                        fontSize: 16.sp,
-                        //color: AppTheme.primaryPrurple,
-                        textColor: AppTheme.white,
-                        color: AppTheme.red,
-                        border: false,
-                        fontWeight: AppTheme.fontSemiBold,
-                      ),
-                      const SizedBox(
-                        height: 16,
-                      ),
-                      MainBtn(
-                        isLoading: false,
-                        textBtn: "LOG IN",
-                        onPress: () {
-                          Navigator.push(
-                              context,
-                              createRoute(page: const LoginScreen()),
-                            );
-                        },
-                        width: double.infinity,
-                        height: 28.sp,
-                        enable: true,
-                        fontSize: 16.sp,
-                        textColor: AppTheme.red,
-                        color: Colors.transparent,
-                        border: true,
-                        fontWeight: AppTheme.fontSemiBold,
-                      ),
-                    ],
-                  )
-                ],
+                    )
+                  ],
+                ),
               ),
             ),
           ),

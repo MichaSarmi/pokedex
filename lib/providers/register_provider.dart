@@ -4,11 +4,12 @@ class RegisterLoginProvider extends ChangeNotifier {
 
 GlobalKey<FormState> formKeyStepPassword= GlobalKey<FormState>();
 GlobalKey<FormState> formKeySteLogin= GlobalKey<FormState>();
+GlobalKey<FormState> formKeySteName= GlobalKey<FormState>();
 
   String email = '';
   String password='';
   String repeatPassword='';
-  String username = '';
+  String name = '';
 
 
 
@@ -22,10 +23,19 @@ GlobalKey<FormState> formKeySteLogin= GlobalKey<FormState>();
 
   bool _validEmail = false;
   bool _validFormatEmail = false;
+   bool _validFormatName = false;
+
+
 
   bool get validFormatEmail => _validFormatEmail;
   set validFormatEmail(bool valor) {
     _validFormatEmail = valor;
+    notifyListeners();
+  }
+
+  bool get validFormatName=> _validFormatName;
+  set validFormatName(bool valor) {
+    _validFormatName = valor;
     notifyListeners();
   }
 
@@ -64,6 +74,13 @@ GlobalKey<FormState> formKeySteLogin= GlobalKey<FormState>();
     _validPassword = valor;
     notifyListeners();
   }
+
+  bool _enableaVerify=true;
+  bool get enableaVerify => _enableaVerify;
+  set enableaVerify(bool valor) {
+    _enableaVerify = valor;
+    notifyListeners();
+  }
  
 
 
@@ -78,6 +95,10 @@ GlobalKey<FormState> formKeySteLogin= GlobalKey<FormState>();
 
   bool isValidFormLogin() {
     return formKeySteLogin.currentState?.validate() ?? false;
+  }
+
+  bool isValidFormName() {
+    return formKeySteName.currentState?.validate() ?? false;
   }
 
 

@@ -30,6 +30,8 @@ class AppTheme {
   static const FontWeight fontRegular = FontWeight.w400;
   static const FontWeight fontLigth = FontWeight.w300;
   static const FontWeight fontExtraLigth = FontWeight.w200;
+  //shadows
+  static const shadow = <Shadow>[Shadow(color: Colors.black, blurRadius: 50.0)];
   //gradinet
   static LinearGradient gradienteLine = const LinearGradient(
       begin: Alignment.topCenter,
