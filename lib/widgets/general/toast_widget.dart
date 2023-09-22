@@ -1,6 +1,4 @@
 import 'dart:async';
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
@@ -17,8 +15,6 @@ class Toast {
     required bool succes,
     required BuildContext context,
     int? duration,
-    String? bipID,
-    String? pathImageBip
 
     }
     ) async {
@@ -31,8 +27,6 @@ class Toast {
         context, 
         backgroundColor, 
         textColor,
-        bipID,
-        pathImageBip
       );
       pos=24.sp;
     }
@@ -48,8 +42,6 @@ class Toast {
     BuildContext context,
     Color background,
     Color textColor,
-    String? bipID,
-    String? pathImageBip
  
   ) async {
     var overlayState = Overlay.of(context);
@@ -57,7 +49,6 @@ class Toast {
       maintainState: true,
       opaque: false,
       builder: (BuildContext context) => _ToastAnimatedWidget(
-        bipId: bipID,
         child: SizedBox(
           width: Adaptive.w(100),
           child: Container(
@@ -77,13 +68,10 @@ class Toast {
                     color: succes?AppTheme.green:AppTheme.red,
                   ),
                   Expanded(
-                    //todo renmder image
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        pathImageBip!=null?
-                        const SizedBox(width: 16,):const SizedBox(),
                         Container(
                           constraints: BoxConstraints(
                             maxWidth: Adaptive.w(65),
@@ -105,21 +93,6 @@ class Toast {
                             ),
                           ),
                         ),
-                        pathImageBip!=null?
-                        SizedBox(
-                          width: 24.sp,
-                          child: AspectRatio(
-                            aspectRatio: 3 / 4,
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(8.sp),
-                              child: Image.file(
-                                File(pathImageBip), 
-                                width: double.infinity, 
-                                fit: BoxFit.cover
-                                )
-                              ),
-                          ),
-                        ):const SizedBox(),
                       ],
                     ),
                   ),
@@ -145,12 +118,11 @@ class Toast {
 class _ToastAnimatedWidget extends StatefulWidget {
    const _ToastAnimatedWidget({
     super.key,
-    required this.child, this.bipId,
+    required this.child,
   
   });
 
   final Widget child;
-  final String? bipId;
 
   @override
   _ToastWidgetState createState() => _ToastWidgetState();
@@ -172,33 +144,7 @@ class _ToastWidgetState extends State<_ToastAnimatedWidget>
     AnimatedPositioned(
       duration: const Duration(milliseconds: 500),
       top: pos,
-      //opacity: _isVisible ? 1.0 : 0.0,
-      child: GestureDetector(
-        onTap: (() {
-          
-          setState(() {
-            //pos=-42.sp;
-          });
-          if(widget.bipId!=null){
-            //todo quitoar comentarios
-           /* Navigator.push(
-              context,
-              createRoute(
-                page: HubUniqueBip(
-                  bipId:  widget.bipId!,
-                ),
-              ),
-            );*/
-          }
-           
-        }),
-        onPanUpdate: (details) {
-          setState(() {
-            pos=-42.sp;
-          });
-        },
-        child: widget.child
-        ),
+      child: widget.child,
     );
   }
 }

@@ -6,8 +6,6 @@ import 'package:responsive_sizer/responsive_sizer.dart';
 import '../../theme/app_theme.dart';
 import '../widgets.dart';
 
-
-
 class MainBtn extends StatelessWidget {
   final bool isLoading;
   final String? textBtn;

@@ -35,6 +35,7 @@ class _CheckAuthScreenBodyState extends State<CheckAuthScreenBody> {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       final authService = Provider.of<AuthService>(context, listen: false);
       authService.jwt = await authService.readTokenStorage();
+   
       if (authService.jwt == '') {
         // ignore: use_build_context_synchronously
         Toast.show(msg: 'Expired Session', succes: false, context: context);
@@ -46,6 +47,7 @@ class _CheckAuthScreenBodyState extends State<CheckAuthScreenBody> {
                 pageBuilder: (_, __, ___) => const WelcomeScreen(),
                 transitionDuration: const Duration(seconds: 0)));
       } else {
+           //verificar si existe un token de firebase
         await authService.verifyCodeVerify(jwt: authService.jwt).then((value) {
           print(value);
           if (value['error'] == 'internet') {
@@ -74,12 +76,12 @@ class _CheckAuthScreenBodyState extends State<CheckAuthScreenBody> {
                     pageBuilder: (_, __, ___) => const HomeScreen(),
                     transitionDuration: const Duration(seconds: 0)));
           } else {
-            //if user dont verify your email
+            
             Toast.show(
                 msg: 'Please complete your information.',
                 succes: false,
                 context: context);
-
+            //enviar al usario a completar su información
             Navigator.push(
               context,
               createRoute(
@@ -102,6 +104,7 @@ class _CheckAuthScreenBodyState extends State<CheckAuthScreenBody> {
 
   @override
   Widget build(BuildContext context) {
+  // load mientras carga el app
     return Container(
       color: AppTheme.white,
       width: Adaptive.w(100),

@@ -21,7 +21,7 @@ class AuthService extends ChangeNotifier{
     notifyListeners();
   }
   /**
-   * create user with api firebase
+   * Registrar a un usuariio con firbase
    */
   Future<dynamic> createUser({required String email, required String password}) async{
     final Map<String,dynamic> authData = {
@@ -48,7 +48,7 @@ class AuthService extends ChangeNotifier{
   }
 
    /**
-   * login user with api firebase
+   * Logear a un usuario con firebase
    */
   Future<dynamic> loginUser({required String email, required String password}) async{
     final Map<String,dynamic> authData = {
@@ -75,7 +75,7 @@ class AuthService extends ChangeNotifier{
   }
 
   /**
-   * send email verify with api firebase
+   * Enviar correo de confirmacion a travez de firebase
    */
   Future<dynamic> sendCodeVerify({required String jwt}) async{
     final Map<String,dynamic> authData = {
@@ -131,7 +131,7 @@ class AuthService extends ChangeNotifier{
   }
 
   /**
-   * create user with api firebase
+   * Crear un usuario con el api de firebase
    */
   Future<dynamic> updateNameUser({required String localId,required String jwt, required String displayName}) async{
     final Map<String,dynamic> authData = {
@@ -160,37 +160,46 @@ class AuthService extends ChangeNotifier{
   }
 
   /**
-   * Store de jwt in the flutter store
-   * @jwt , string token from backend
+   * Guarda el token en el storage
+   * @jwt , string
    */
   Future<void> createTokenStorage(String jwt) async {
     jwt = jwt;
     await storage.write(key: 'token', value: jwt);
   }
-
+/**
+ * Leer token del storage
+ */
   Future<String> readTokenStorage() async {
     jwt = await storage.read(key: 'token') ?? '';
     return jwt;
   }
-
+  /**
+   * Eliminar token del storage
+   */
   Future deleteTokenStorage() async {
     await storage.delete(key: 'token');
   }
 
   /**
-   * Store id in the flutter store
-   * @jwt , string token from backend
+   * Crear en el storage el id del usuario
+   * @localId , string
    */
   Future<void> createIdUserStorage(String localId) async {
     localId = localId;
     await storage.write(key: 'localId', value: localId);
   }
 
+  /**
+   * Leer id del usuario que se guardo en el storage
+   */
   Future<String> readIdStorage() async {
     localId = await storage.read(key: 'localId') ?? '';
     return localId;
   }
-
+  /**
+   * Eliminar id del usuario que se guardo en el storage
+   */
   Future deleteIdStorage() async {
     await storage.delete(key: 'localId');
   }
