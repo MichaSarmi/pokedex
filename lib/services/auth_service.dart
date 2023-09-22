@@ -47,6 +47,33 @@ class AuthService extends ChangeNotifier{
     return decodeResp;
   }
 
+   /**
+   * login user with api firebase
+   */
+  Future<dynamic> loginUser({required String email, required String password}) async{
+    final Map<String,dynamic> authData = {
+      'email':email,
+      'password':password
+    };
+
+    final url = Uri.https(_baseUrl,'/v1/accounts:signInWithPassword',{
+      'key':_firebaseToken
+    });
+    dynamic resp ;
+    Map<String, dynamic> decodeResp;
+    try {
+      resp = await http.post(url,body: json.encode(authData));
+      decodeResp =  json.decode(resp.body);
+    } on TimeoutException catch (_) {
+      decodeResp = {'error': 'timeOut'};
+    } on SocketException catch (_) {
+      decodeResp = {'error': 'internet'};
+    } on Error catch (_) {
+      decodeResp = {'error': 'generalError'};
+    }
+    return decodeResp;
+  }
+
   /**
    * send email verify with api firebase
    */

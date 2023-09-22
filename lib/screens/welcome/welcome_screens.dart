@@ -23,7 +23,7 @@ class WelcomeScreen extends StatelessWidget {
           SafeArea(
             child: SingleChildScrollView(
               child: Container(
-                height: Adaptive.h(100),
+                height: Adaptive.h(100)-24,
                 padding: const EdgeInsets.only(left: 16, right: 16),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -74,7 +74,7 @@ class WelcomeScreen extends StatelessWidget {
                           onPress: () {
                             Navigator.push(
                                 context,
-                                createRoute(page: const RegisterScreen()),
+                                createRoute(page: const RegisterScreen(initialPage: 0,)),
                               );
                           },
                           width: double.infinity,

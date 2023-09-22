@@ -10,7 +10,9 @@ import '../../theme/app_theme.dart';
 import '../../widgets/widgets.dart';
 
 class RegisterScreen extends StatelessWidget {
-  const RegisterScreen({Key? key}) : super(key: key);
+  const RegisterScreen({Key? key, required this.initialPage, this.emailInit}) : super(key: key);
+  final int initialPage;
+  final String? emailInit;
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +22,7 @@ class RegisterScreen extends StatelessWidget {
           create: (_) => RegisterLoginProvider(),
         ),
         ChangeNotifierProvider(
-          create: (_) => NavigationStepsProvider(0),
+          create: (_) => NavigationStepsProvider(initialPage),
         ),
         ChangeNotifierProvider(
           create: (_) => AuthService(),
@@ -30,17 +32,40 @@ class RegisterScreen extends StatelessWidget {
         final navigationStepsProvider =
             Provider.of<NavigationStepsProvider>(context);
         return Scaffold(
-          backgroundColor: Colors.red,
+          backgroundColor: AppTheme.white,
+          
+          appBar: AppBar(
+            backgroundColor: AppTheme.white,
+            leadingWidth: 25.sp + 16,
+            leading:initialPage>0? Padding(
+              padding: const EdgeInsets.only(left: 16.0),
+              child: Row(
+                children: [
+                  SizedBox(height: 32.sp),
+                  IconButtonRounded(
+                      size: 25.sp,
+                      icon: Icons.arrow_back_ios_new_rounded,
+                      iconColor: AppTheme.black,
+                      iconSize: 20.sp,
+                      onPress: () {
+                        Navigator.pop(context);
+                      }),
+                ],
+              ),
+            ):const SizedBox(),
+            elevation: 0,
+          ) ,
           body: SafeArea(
             top: false,
             child: PageView(
+              physics: const NeverScrollableScrollPhysics(),
               controller: navigationStepsProvider.pageController,
-              children: const [
-                _StepEmail(),
-                _StepPassword(),
-                _StepUsername(),
-                _StepSendCode(),
-                _StepVerifyEmail()
+              children:  [
+                const _StepEmail(),
+                const _StepPassword(),
+                const _StepUsername(),
+                _StepSendCode(initEmail: emailInit,),
+                const _StepVerifyEmail()
               ],
             ),
           ),
@@ -194,8 +219,9 @@ class __StepVerifyEmailState extends State<_StepVerifyEmail>
 
 class _StepSendCode extends StatefulWidget {
   const _StepSendCode({
-    super.key,
+    super.key, this.initEmail,
   });
+  final String? initEmail;
 
   @override
   State<_StepSendCode> createState() => _StepSendCodeState();
@@ -253,7 +279,7 @@ class _StepSendCodeState extends State<_StepSendCode>
                 ),
                 child: Center(
                   child: Text(
-                    registerProvider.email,
+                    widget.initEmail?? registerProvider.email,
                     style: GoogleFonts.poppins(
                       fontWeight: AppTheme.fontRegular,
                       color: AppTheme.black.withOpacity(.2),
@@ -412,7 +438,7 @@ class _StepUsernameState extends State<_StepUsername>
                       labelStyle: GoogleFonts.poppins(
                           color: AppTheme.grayLigth, fontSize: 18.sp)),
                   /**
-                   * Validete format is empty and format email
+                   * Validate format is empty and format email
                    */
                   validator: (value) {
                     if (registerProvider.name == '') {
@@ -618,7 +644,7 @@ class _StepPasswordState extends State<_StepPassword>
                               !registerProvider.viewPass,
                         )),
                     /**
-                   * Validete format password
+                   * Validate format password
                    */
                     validator: (value) {
                       value = value == null ? '' : value.trim();
@@ -670,7 +696,7 @@ class _StepPasswordState extends State<_StepPassword>
                               !registerProvider.viewPassRepeat,
                         )),
                     /**
-                 * Validete format email
+                 * Validate format email
                  */
                     validator: (value) {
                       value = value == null ? '' : value.trim();
@@ -884,7 +910,7 @@ class _StepEmailState extends State<_StepEmail>
                       labelStyle: GoogleFonts.poppins(
                           color: AppTheme.grayLigth, fontSize: 18.sp)),
                   /**
-                   * Validete format is empty and format email
+                   * Validate format is empty and format email
                    */
                   validator: (value) {
                     if (registerProvider.email == '') {
