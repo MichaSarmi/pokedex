@@ -9,6 +9,8 @@ Además se hace uso de las siguiente API "https://digimon-api.com/"
 ![image](https://github.com/MichaSarmi/pokedex/assets/65983395/7bb22665-bdd4-4fad-8924-35717e2f0c43)
 ![image](https://github.com/MichaSarmi/pokedex/assets/65983395/8508c294-32e9-4e52-917d-9ca1b8dc41f5)
 ![image](https://github.com/MichaSarmi/pokedex/assets/65983395/5dfdf423-e570-46f9-9bb5-af9d688262d4)
+![image](https://github.com/MichaSarmi/pokedex/assets/65983395/9a8d2426-6fa6-445b-9ad6-e7009da90d42)
+
 
 
 ## Características
