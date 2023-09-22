@@ -23,7 +23,9 @@ class WelcomeScreen extends StatelessWidget {
           SafeArea(
             child: SingleChildScrollView(
               child: Container(
-                height: Adaptive.h(100)-24,
+                constraints: BoxConstraints(
+                  minHeight:  Adaptive.h(100)-24,
+                ),
                 padding: const EdgeInsets.only(left: 16, right: 16),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -53,16 +55,10 @@ class WelcomeScreen extends StatelessWidget {
                                   fontSize: 28.sp,
                                 )),
                             ),
-                          Container(
-                            constraints: BoxConstraints(
-                              minHeight: Adaptive.h(42),
-                              maxHeight: Adaptive.h(65)
-                            ),
-                            child: Image.asset(
+                          Image.asset(
                               'assets/images/pikachu.png',
-                              width: Adaptive.w(90),
-                            ),
-                          ),
+                              width: Adaptive.h(46),
+                            )
                         ],
                       ),
                     ),
@@ -108,6 +104,7 @@ class WelcomeScreen extends StatelessWidget {
                           border: true,
                           fontWeight: AppTheme.fontSemiBold,
                         ),
+                        const SizedBox(height: 16,)
                       ],
                     )
                   ],

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:pokedex/providers/providers.dart';
 import 'package:pokedex/screens/screens.dart';
 import 'package:pokedex/services/pokemon_service.dart';
 import 'package:provider/provider.dart';
@@ -37,16 +38,20 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (_) => PokemonService(),
         ),
+        ChangeNotifierProvider(
+          create: (_) => ResposiveProvider(),
+        ),
       ],
       child: ResponsiveSizer(
-        builder: (BuildContext, Orientation, ScreenType) {
+        builder: (_, __, screenTypes) {
+
           return MaterialApp(
             debugShowCheckedModeBanner: false,
             title: 'Pokedex',
             initialRoute: 'check/',
-            theme: AppTheme.darkTheme, //todo change name
+            theme: AppTheme.pokemonTheme,
             routes: {
-              'check/': ((context) => const CheckAuthScreen()),
+              'check/': ((context) => const WelcomeScreen()),
             },
           );
         },

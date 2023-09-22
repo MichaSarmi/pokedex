@@ -39,7 +39,7 @@ class AppTheme {
       end: Alignment.bottomCenter,
       colors: [blue, white]);
 
-  static final ThemeData darkTheme = ThemeData.dark().copyWith(
+  static final ThemeData pokemonTheme = ThemeData.dark().copyWith(
     //color primario
     primaryColor: red,
     //App bartheme

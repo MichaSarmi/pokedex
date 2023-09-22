@@ -4,12 +4,14 @@ import 'package:provider/provider.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 import '../../navigator/navigator.dart';
+import '../../providers/responsive_provider.dart';
 import '../../services/auth_service.dart';
 import '../../theme/app_theme.dart';
 import '../../widgets/general/toast_widget.dart';
 
 class CheckAuthScreen extends StatelessWidget {
-  const CheckAuthScreen({Key? key}) : super(key: key);
+  final ScreenType? screenType ;
+  const CheckAuthScreen({Key? key, this.screenType}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -17,12 +19,13 @@ class CheckAuthScreen extends StatelessWidget {
       ChangeNotifierProvider(
         create: (_) => AuthService(),
       ),
-    ], child: const CheckAuthScreenBody());
+    ], child:  CheckAuthScreenBody(screenType: screenType,));
   }
 }
 
 class CheckAuthScreenBody extends StatefulWidget {
-  const CheckAuthScreenBody({Key? key}) : super(key: key);
+  final ScreenType? screenType ;
+  const CheckAuthScreenBody({Key? key, this.screenType}) : super(key: key);
 
   @override
   State<CheckAuthScreenBody> createState() => _CheckAuthScreenBodyState();
@@ -34,8 +37,10 @@ class _CheckAuthScreenBodyState extends State<CheckAuthScreenBody> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       final authService = Provider.of<AuthService>(context, listen: false);
+       final resposiveProvider =
+          Provider.of<ResposiveProvider>(context,listen: false);
       authService.jwt = await authService.readTokenStorage();
-   
+    widget.screenType!=null?resposiveProvider.screenType = widget.screenType!:'' ;
       if (authService.jwt == '') {
        
         await authService.deleteTokenStorage();

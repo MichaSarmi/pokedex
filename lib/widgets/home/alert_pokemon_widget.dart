@@ -26,7 +26,6 @@ class _AlertPokemonState extends State<AlertPokemon> {
   @override
   void initState() {
     super.initState();
-    print(widget.id);
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       // final loginFormProvider =  Provider.of<LoginFormProvider>(context,listen: false);
       final pokemonService =
