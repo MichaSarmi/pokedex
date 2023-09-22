@@ -38,7 +38,7 @@ class MyApp extends StatelessWidget {
           initialRoute: 'check/',
           theme: AppTheme.darkTheme, //todo change name
           routes: {
-            'check/': ((context) => const CheckAuthScreen()),
+            'check/': ((context) => const HomeScreen()),
           },
         );
       },

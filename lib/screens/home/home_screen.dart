@@ -8,9 +8,25 @@ import '../../services/services.dart';
 import '../../theme/app_theme.dart';
 import '../../widgets/widgets.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+   final ScrollController scrollControler = ScrollController();
+   @override
+  void initState(){
+    super.initState();
+     scrollControler.addListener(() {
+        if(scrollControler.position.pixels >= (scrollControler.position.maxScrollExtent ) - 500 ){
+          print('get more');
+        }
+    
+     });
+  }
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -51,28 +67,29 @@ class HomeScreen extends StatelessWidget {
                         iconSize: 20.sp,
                         onPress: () {
                           showDialog(
-                          context: context,
-                          builder: (_) {
-                            return AlertWidget(
-                              title: 'Sign out of your account',
-                              description:'You are about to log out of Pokédex.',
-                              nameButtonLeft:'Go back',
-                              nameButtonRight:'Log out',
-                              colorOrder: false,
-                              onActionAlert: () async {
-                                print('log out');
-                                await authService.deleteTokenStorage();
-                                // ignore: use_build_context_synchronously
-                                Navigator.pushReplacement(
-                                      context,
-                                      PageRouteBuilder(
-                                          pageBuilder: (_, __, ___) =>
-                                              const WelcomeScreen(),
-                                          transitionDuration:
-                                              const Duration(seconds: 0)));
-                              },
-                            );
-                          });
+                              context: context,
+                              builder: (_) {
+                                return AlertWidget(
+                                  title: 'Sign out of your account',
+                                  description:
+                                      'You are about to log out of Pokédex.',
+                                  nameButtonLeft: 'Go back',
+                                  nameButtonRight: 'Log out',
+                                  colorOrder: false,
+                                  onActionAlert: () async {
+                                    print('log out');
+                                    await authService.deleteTokenStorage();
+                                    // ignore: use_build_context_synchronously
+                                    Navigator.pushReplacement(
+                                        context,
+                                        PageRouteBuilder(
+                                            pageBuilder: (_, __, ___) =>
+                                                const WelcomeScreen(),
+                                            transitionDuration:
+                                                const Duration(seconds: 0)));
+                                  },
+                                );
+                              });
                         }),
                   ],
                 ),
@@ -108,24 +125,44 @@ class HomeScreen extends StatelessWidget {
                 ),
               ),
               Expanded(
-                child: GridView.builder(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
-                  itemCount: 10,
-                  gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                      maxCrossAxisExtent: Adaptive.w(50),
-                      childAspectRatio: 1,
-                      crossAxisSpacing: 16,
-                      mainAxisSpacing: 16),
-                  itemBuilder: (context, index) {
-                    return Container(
-                      width: 33,
-                      height: 23,
-                      color: Colors.red,
-                    );
-                  },
+                child: Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    GridView.builder(
+                      controller: scrollControler,
+                      padding:
+                          const EdgeInsets.only(top: 16,bottom: 100, left: 24,right: 24),
+                      itemCount: 10,
+                      gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                          maxCrossAxisExtent: Adaptive.w(50),
+                          childAspectRatio: 0.85,
+                          crossAxisSpacing: 16,
+                          mainAxisSpacing: 16),
+                      itemBuilder: (context, index) {
+                        return ItemListPokemon(
+                          field: '',
+                          name: '',
+                          number: '',
+                          image: '',
+                          onPress: () {
+                            showDialog(
+                                context: context,
+                                builder: (_) {
+                                  return const AlertPokemon();
+                                });
+                          },
+                        );
+                      },
+                    ),
+                    //todo conditional load more
+                    Positioned(
+                      bottom: 24.sp,
+                      child: LoadingLogin(size: 24.sp,color: AppTheme.blue,)
+                      )
+                  ],
                 ),
-              )
+              ),
+              
             ],
           ),
         );
@@ -133,3 +170,6 @@ class HomeScreen extends StatelessWidget {
     );
   }
 }
+
+
+

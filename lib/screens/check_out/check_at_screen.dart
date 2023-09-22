@@ -37,8 +37,7 @@ class _CheckAuthScreenBodyState extends State<CheckAuthScreenBody> {
       authService.jwt = await authService.readTokenStorage();
    
       if (authService.jwt == '') {
-        // ignore: use_build_context_synchronously
-        Toast.show(msg: 'Expired Session', succes: false, context: context);
+       
         await authService.deleteTokenStorage();
         // ignore: use_build_context_synchronously
         Navigator.pushReplacement(
@@ -92,11 +91,12 @@ class _CheckAuthScreenBodyState extends State<CheckAuthScreenBody> {
             );
           }
         }).catchError((err) {
-          Toast.show(
-              msg:
-                  'It is not possible to log in at this time, please try again later.',
-              succes: false,
-              context: context);
+            Toast.show(msg: 'Expired Session', succes: false, context: context);
+           Navigator.pushReplacement(
+            context,
+            PageRouteBuilder(
+                pageBuilder: (_, __, ___) => const WelcomeScreen(),
+                transitionDuration: const Duration(seconds: 0)));
         });
       }
     });

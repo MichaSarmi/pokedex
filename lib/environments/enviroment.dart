@@ -5,5 +5,6 @@
 class Enviroment {
   //static bool production = false;
   static String baseUrl = 'identitytoolkit.googleapis.com';
+  static String baseUrlPokemon = 'digi-api.com';
   static String firebaseToken = 'AIzaSyDqV_ouN5xF0Zu_BXRpA3Zr-Ck3l_30bxU';
 }
