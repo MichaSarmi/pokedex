@@ -1,6 +1,6 @@
 Pokedex Flutter App with Firebase Authentication
 
-Este es un proyecto de muestra de una aplicación Pokedex desarrollada en Flutter que utiliza Firebase para la autenticación de usuarios, creación de usuarios y verificación de correo electrónico.
+Este es un proyecto de muestra de una aplicación Pokedex desarrollada en Flutter que utiliza Firebase para la autenticación de usuarios.
 Además se hace uso de las siguiente API "https://digimon-api.com/"
 
 ## Capturas de Pantalla
