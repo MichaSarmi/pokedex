@@ -1,3 +1,5 @@
+export 'package:pokedex/widgets/general/alert_widget.dart';
+
 export 'package:pokedex/widgets/general/btn_icon_rounded_widget.dart';
 
 export 'package:pokedex/widgets/general/toast_widget.dart';

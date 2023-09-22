@@ -38,6 +38,7 @@ class _CheckAuthScreenBodyState extends State<CheckAuthScreenBody> {
       if (authService.jwt == '') {
         // ignore: use_build_context_synchronously
         Toast.show(msg: 'Expired Session', succes: false, context: context);
+        await authService.deleteTokenStorage();
         // ignore: use_build_context_synchronously
         Navigator.pushReplacement(
             context,
