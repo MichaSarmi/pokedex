@@ -35,10 +35,10 @@ class MyApp extends StatelessWidget {
         return MaterialApp(
           debugShowCheckedModeBanner: false,
           title: 'Pokedex',
-          initialRoute: 'welcome/',
+          initialRoute: 'check/',
           theme: AppTheme.darkTheme, //todo change name
           routes: {
-            'welcome/': ((context) => const WelcomeScreen()),
+            'check/': ((context) => const CheckAuthScreen()),
           },
         );
       },
