@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:pokedex/screens/screens.dart';
+import 'package:pokedex/services/pokemon_service.dart';
+import 'package:provider/provider.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'theme/app_theme.dart';
 
@@ -30,18 +32,25 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return ResponsiveSizer(
-      builder: (BuildContext, Orientation, ScreenType) {
-        return MaterialApp(
-          debugShowCheckedModeBanner: false,
-          title: 'Pokedex',
-          initialRoute: 'check/',
-          theme: AppTheme.darkTheme, //todo change name
-          routes: {
-            'check/': ((context) => const HomeScreen()),
-          },
-        );
-      },
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (_) => PokemonService(),
+        ),
+      ],
+      child: ResponsiveSizer(
+        builder: (BuildContext, Orientation, ScreenType) {
+          return MaterialApp(
+            debugShowCheckedModeBanner: false,
+            title: 'Pokedex',
+            initialRoute: 'check/',
+            theme: AppTheme.darkTheme, //todo change name
+            routes: {
+              'check/': ((context) => const CheckAuthScreen()),
+            },
+          );
+        },
+      ),
     );
   }
 }

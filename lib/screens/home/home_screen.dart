@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pokedex/screens/screens.dart';
+import 'package:pokedex/services/pokemon_service.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
@@ -16,17 +17,50 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-   final ScrollController scrollControler = ScrollController();
-   @override
-  void initState(){
+  final ScrollController scrollControler = ScrollController();
+  @override
+  void initState() {
     super.initState();
-     scrollControler.addListener(() {
-        if(scrollControler.position.pixels >= (scrollControler.position.maxScrollExtent ) - 500 ){
-          print('get more');
-        }
-    
-     });
+
+    scrollControler.addListener(() {
+      if (scrollControler.position.pixels >=
+          (scrollControler.position.maxScrollExtent) - 200) {
+        WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+          final pokemonService =
+              Provider.of<PokemonService>(context, listen: false);
+          if(!pokemonService.isLoaddingMore){
+            pokemonService.isLoaddingMore = true;
+            print("more");
+            pokemonService.page++;
+            print(pokemonService.page);
+          await pokemonService
+              .getPokemonList(pageSize: 20, page: pokemonService.page)
+              .then((value) {
+            print(value);
+          }).catchError((err) {
+            print(err);
+          });
+           pokemonService.isLoaddingMore = false;
+          }
+         
+        });
+      }
+    });
+
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+      // final loginFormProvider =  Provider.of<LoginFormProvider>(context,listen: false);
+      final pokemonService =
+          Provider.of<PokemonService>(context, listen: false);
+      pokemonService.isLoading = true;
+      await pokemonService.getPokemonList(pageSize: 20, page: 0).then((value) {
+        print(value);
+      }).catchError((err) {
+        print(err);
+      });
+      pokemonService.isLoading = false;
+    });
   }
+
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -37,6 +71,7 @@ class _HomeScreenState extends State<HomeScreen> {
       ],
       builder: (context, child) {
         final authService = Provider.of<AuthService>(context);
+        final pokemonService = Provider.of<PokemonService>(context);
         return Scaffold(
           appBar: AppBar(
             automaticallyImplyLeading: false,
@@ -99,70 +134,48 @@ class _HomeScreenState extends State<HomeScreen> {
           backgroundColor: AppTheme.grayUltraLigth,
           body: Column(
             children: [
-              const SizedBox(
-                height: 24,
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: TextFormField(
-                  cursorColor: AppTheme.black,
-                  autocorrect: false,
-                  autofocus: false,
-                  keyboardType: TextInputType.text,
-                  style: const TextStyle(color: AppTheme.black),
-                  decoration: InputDecoration(
-                      fillColor: AppTheme.white,
-                      prefixIcon: Icon(Icons.search,
-                          color: AppTheme.grayLigth, size: 20.sp),
-                      hintText: "Search pokemon",
-                      labelText: "Search pokemon",
-                      labelStyle: GoogleFonts.poppins(
-                          color: AppTheme.grayLigth, fontSize: 18.sp)),
-                  onChanged: ((value) {
-                    //todo iimplemet search
-                    //loginFormProvider.password = value;
-                  }),
-                ),
-              ),
               Expanded(
                 child: Stack(
                   alignment: Alignment.center,
                   children: [
+                    !pokemonService.isLoading?
                     GridView.builder(
                       controller: scrollControler,
-                      padding:
-                          const EdgeInsets.only(top: 16,bottom: 100, left: 24,right: 24),
-                      itemCount: 10,
+                      padding: const EdgeInsets.only(
+                          top: 16, bottom: 100, left: 24, right: 24),
+                      itemCount: pokemonService.listPokemon.length,
                       gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
                           maxCrossAxisExtent: Adaptive.w(50),
-                          childAspectRatio: 0.85,
+                          childAspectRatio: 1,
                           crossAxisSpacing: 16,
                           mainAxisSpacing: 16),
                       itemBuilder: (context, index) {
                         return ItemListPokemon(
-                          field: '',
-                          name: '',
-                          number: '',
-                          image: '',
+                          name: pokemonService.listPokemon[index].name,
+                          number: index,
+                          image: pokemonService.listPokemon[index].image,
                           onPress: () {
                             showDialog(
                                 context: context,
                                 builder: (_) {
-                                  return const AlertPokemon();
+                                  return  AlertPokemon(
+                                    id:pokemonService.listPokemon[index].id.toString() , 
+                                    number: index,
+                                    image: pokemonService.listPokemon[index].image,
+                                    );
                                 });
                           },
                         );
                       },
-                    ),
-                    //todo conditional load more
-                    Positioned(
-                      bottom: 24.sp,
-                      child: LoadingLogin(size: 24.sp,color: AppTheme.blue,)
-                      )
+                    ):LoadingLogin(size: 24.sp, color: AppTheme.blue,),
+                      if(pokemonService.isLoaddingMore)
+                      Positioned(
+                        bottom: 24.sp,
+                       child: LoadingLogin(size: 24.sp,color: AppTheme.blue,)
+                       )
                   ],
                 ),
               ),
-              
             ],
           ),
         );
@@ -170,6 +183,3 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 }
-
-
-

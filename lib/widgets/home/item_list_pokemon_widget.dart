@@ -8,13 +8,11 @@ class ItemListPokemon extends StatelessWidget {
     super.key,
     required this.number,
     required this.name,
-    required this.field,
     required this.image,
     required this.onPress,
   });
-  final String number;
+  final int number;
   final String name;
-  final String field;
   final String image;
   final Function onPress;
 
@@ -30,8 +28,8 @@ class ItemListPokemon extends StatelessWidget {
         child: Stack(
           children: [
             Positioned(
-              right: -32.sp,
-              bottom: -32.sp,
+              right: -36.sp,
+              bottom: -38.sp,
               child: Image.asset(
                 'assets/images/ball_back.png',
                 width: Adaptive.w(45),
@@ -46,11 +44,10 @@ class ItemListPokemon extends StatelessWidget {
                   Center(
                     child: SizedBox(
                       width: 35.sp,
+                      height: 35.sp,
                       child: Image.network(
-                        'https://assets.pokemon.com/assets/cms2/img/pokedex/full/007.png',
-                        loadingBuilder: (context, child, loadingProgress) {
-                          return Image.asset('assets/images/whopokemon.png');
-                        },
+                        image,
+                        
                         errorBuilder: (context, error, stackTrace) {
                            return Image.asset('assets/images/whopokemon.png');
                         },
@@ -65,7 +62,8 @@ class ItemListPokemon extends StatelessWidget {
                         borderRadius: BorderRadius.circular(100)),
                     padding:
                         const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
-                    child: Text('#001',
+                    child: Text(number<10?'#00$number':number<100?'#0$number':'#$number',
+                    textAlign: TextAlign.center,
                         style: GoogleFonts.poppins(
                           fontWeight: AppTheme.fontSemiBold,
                           color: AppTheme.white,
@@ -73,18 +71,10 @@ class ItemListPokemon extends StatelessWidget {
                         )),
                   )),
                   Center(
-                    child: Text('Bulbasaur',
+                    child: Text(name,
                         style: GoogleFonts.poppins(
                           fontWeight: AppTheme.fontSemiBold,
                           color: AppTheme.graySemiDark,
-                          fontSize: 14.sp,
-                        )),
-                  ),
-                  Center(
-                    child: Text('Grass   ·   Posion',
-                        style: GoogleFonts.poppins(
-                          fontWeight: AppTheme.fontSemiBold,
-                          color: AppTheme.greenpoke,
                           fontSize: 14.sp,
                         )),
                   ),
