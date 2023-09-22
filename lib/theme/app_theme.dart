@@ -10,8 +10,8 @@ class AppTheme {
   //blue
   static const Color blue = Color(0xff6AB1E6);
   //gray
-  static const Color grayUltraLigth = Color(0xffEFEFEF);
-  static const Color grayLigth = Color(0xffF1F0F1);
+  static const Color grayUltraLigth = Color(0xffF1F0F1);
+  static const Color grayLigth = Color.fromARGB(255, 218, 218, 218);
   static const Color graySemiLigth = Color(0xff494949);
   static const Color graySemiDark = Color(0xff2D2D2D);
   static const Color grayDark = Color(0xff1C1C1C);
