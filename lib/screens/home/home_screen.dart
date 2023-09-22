@@ -5,7 +5,7 @@ import 'package:pokedex/services/pokemon_service.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
-import '../../providers/responsive_provider.dart';
+
 import '../../services/services.dart';
 import '../../theme/app_theme.dart';
 import '../../widgets/widgets.dart';
@@ -75,7 +75,7 @@ class _HomeScreenState extends State<HomeScreen> {
       builder: (context, child) {
         final authService = Provider.of<AuthService>(context);
         final pokemonService = Provider.of<PokemonService>(context);
-        final resposiveProvider = Provider.of<ResposiveProvider>(context);
+
         return Scaffold(
           appBar: AppBar(
             automaticallyImplyLeading: false,
@@ -149,7 +149,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           top: 16, bottom: 100, left: 24, right: 24),
                       itemCount: pokemonService.listPokemon.length,
                       gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                          maxCrossAxisExtent:resposiveProvider.screenType==ScreenType.mobile? Adaptive.w(50):Adaptive.w(40),
+                          maxCrossAxisExtent:Adaptive.w(100)<767?  Adaptive.w(50):Adaptive.w(40),
                           childAspectRatio: 1,
                           crossAxisSpacing: 16,
                           mainAxisSpacing: 16),

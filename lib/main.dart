@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:pokedex/providers/providers.dart';
 import 'package:pokedex/screens/screens.dart';
 import 'package:pokedex/services/pokemon_service.dart';
 import 'package:provider/provider.dart';
@@ -37,9 +36,6 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(
           create: (_) => PokemonService(),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => ResposiveProvider(),
         ),
       ],
       child: ResponsiveSizer(

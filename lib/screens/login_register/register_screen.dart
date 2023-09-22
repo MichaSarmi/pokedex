@@ -91,7 +91,6 @@ class __StepVerifyEmailState extends State<_StepVerifyEmail>
     super.build(context);
     final registerProvider = Provider.of<RegisterLoginProvider>(context);
     final authService = Provider.of<AuthService>(context);
-
     return Scaffold(
       body: Container(
         padding: const EdgeInsets.only(left: 16, right: 16),
@@ -123,9 +122,11 @@ class __StepVerifyEmailState extends State<_StepVerifyEmail>
               ),
               ClipRRect(
                 borderRadius: BorderRadius.circular(8),
-                child: Image.asset(
-                  'assets/images/example.jpg',
-                  width: Adaptive.w(100),
+                child: Center(
+                  child: Image.asset(
+                    'assets/images/example.jpg',
+                    width: Adaptive.w(Adaptive.w(100)<767? 100:50),
+                  ),
                 ),
               ),
               SizedBox(

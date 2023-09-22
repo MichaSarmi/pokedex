@@ -1,4 +1,3 @@
-export 'package:pokedex/providers/responsive_provider.dart';
 
 export 'package:pokedex/providers/register_provider.dart';
 

@@ -4,7 +4,6 @@ import 'package:provider/provider.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 import '../../navigator/navigator.dart';
-import '../../providers/responsive_provider.dart';
 import '../../services/auth_service.dart';
 import '../../theme/app_theme.dart';
 import '../../widgets/general/toast_widget.dart';
@@ -37,10 +36,8 @@ class _CheckAuthScreenBodyState extends State<CheckAuthScreenBody> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       final authService = Provider.of<AuthService>(context, listen: false);
-       final resposiveProvider =
-          Provider.of<ResposiveProvider>(context,listen: false);
       authService.jwt = await authService.readTokenStorage();
-    widget.screenType!=null?resposiveProvider.screenType = widget.screenType!:'' ;
+  
       if (authService.jwt == '') {
        
         await authService.deleteTokenStorage();
