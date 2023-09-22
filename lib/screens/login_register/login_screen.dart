@@ -265,6 +265,7 @@ class LoginScreen extends StatelessWidget {
                                       transitionDuration:
                                           const Duration(seconds: 0)));
                             } else {
+                              //if user dont verify your email
                               Toast.show(
                                   msg: 'Please complete your information.',
                                   succes: false,
