@@ -22,7 +22,7 @@ Además se hace uso de las siguiente API "https://digimon-api.com/"
 
 
 ## Configuración
-Ojo debes tener configurado flutter entu maquina para poder ejecutar el proyecto.
+Ojo debes tener configurado flutter en tu maquina para poder ejecutar el proyecto.
 Para ejecutar este proyecto en tu máquina local, sigue estos pasos:
 
 1. Clona el repositorio:
